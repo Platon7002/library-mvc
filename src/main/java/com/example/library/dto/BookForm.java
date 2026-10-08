@@ -8,12 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-/**
- * Объект формы создания/редактирования книги. Правила проверки заданы аннотациями;
- * Spring проверяет их, когда в контроллере стоит @Valid.
- * Используем отдельный класс, а не саму сущность Book, чтобы форма не зависела от хранилища
- * и чтобы пустое числовое поле давало ошибку «обязательно», а не превращалось в 0.
- */
 public class BookForm {
 
     private Long id;
