@@ -2,7 +2,6 @@ package com.example.library.model;
 
 import java.util.Optional;
 
-/** Жанр книги. title — русское название для отображения на страницах. */
 public enum Genre {
     FANTASY("Фэнтези"),
     CLASSIC("Классика"),
@@ -21,12 +20,10 @@ public enum Genre {
         return title;
     }
 
-    /** Код для адреса страницы: /genres/fantasy */
     public String getCode() {
         return name().toLowerCase();
     }
 
-    /** Ищет жанр по коду из адреса. Неизвестный код даёт пустой Optional. */
     public static Optional<Genre> fromCode(String code) {
         if (code == null) {
             return Optional.empty();
