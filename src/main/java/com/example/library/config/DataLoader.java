@@ -7,7 +7,6 @@ import com.example.library.dto.BookForm;
 import com.example.library.model.Genre;
 import com.example.library.service.BookService;
 
-/** При запуске заполняет хранилище несколькими книгами, чтобы страницы не были пустыми. */
 @Component
 public class DataLoader implements CommandLineRunner {
 
