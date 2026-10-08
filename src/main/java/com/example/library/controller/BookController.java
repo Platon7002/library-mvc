@@ -18,7 +18,6 @@ import com.example.library.service.BookService;
 
 import jakarta.validation.Valid;
 
-/** Контроллер №2: CRUD книг (список, просмотр, создание, редактирование, удаление). */
 @Controller
 @RequestMapping("/books")
 public class BookController {
@@ -29,13 +28,11 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    /** Список жанров доступен во всех страницах этого контроллера (для выпадающих списков). */
     @ModelAttribute("genres")
     public Genre[] genres() {
         return Genre.values();
     }
 
-    // ---------- чтение ----------
 
     @GetMapping
     public String list(@RequestParam(required = false) String q,
@@ -53,7 +50,6 @@ public class BookController {
         return "books/detail";
     }
 
-    // ---------- создание ----------
 
     @GetMapping("/new")
     public String newForm(Model model) {
@@ -70,14 +66,13 @@ public class BookController {
         checkDuplicate(form, null, result);
         if (result.hasErrors()) {
             model.addAttribute("pageTitle", "Новая книга");
-            return "books/form";                      // остаёмся на форме и показываем ошибки
+            return "books/form";                    
         }
         Book book = bookService.create(form);
         redirect.addFlashAttribute("message", "Книга «" + book.getTitle() + "» добавлена");
-        return "redirect:/books/" + book.getId();     // паттерн Post/Redirect/Get
+        return "redirect:/books/" + book.getId();    
     }
 
-    // ---------- редактирование ----------
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
@@ -92,7 +87,7 @@ public class BookController {
                          BindingResult result,
                          RedirectAttributes redirect,
                          Model model) {
-        bookService.get(id);                          // если книги нет, получим 404
+        bookService.get(id);                      
         form.setId(id);
         checkDuplicate(form, id, result);
         if (result.hasErrors()) {
@@ -104,7 +99,6 @@ public class BookController {
         return "redirect:/books/" + id;
     }
 
-    // ---------- удаление ----------
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes redirect) {
@@ -114,7 +108,6 @@ public class BookController {
         return "redirect:/books";
     }
 
-    /** Бизнес-проверка поверх аннотаций: ошибка привязывается к полю «title». */
     private void checkDuplicate(BookForm form, Long excludeId, BindingResult result) {
         if (!result.hasFieldErrors("title") && !result.hasFieldErrors("author")
                 && bookService.isDuplicate(form.getTitle(), form.getAuthor(), excludeId)) {
