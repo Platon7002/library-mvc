@@ -1,6 +1,5 @@
 package com.example.library.model;
 
-/** Сущность «Книга». Хранится в репозитории (в памяти). */
 public class Book {
 
     private Long id;
