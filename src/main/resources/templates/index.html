@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Главная')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <section class="hero">
+        <h1>Добро пожаловать в библиотеку</h1>
+        <p>Каталог книг: просматривайте, ищите, добавляйте и редактируйте.</p>
+        <a class="btn" th:href="@{/books}">Открыть каталог</a>
+    </section>
+
+    <section class="cards">
+        <div class="card stat">
+            <div class="stat-number" th:text="${total}">0</div>
+            <div>книг в каталоге</div>
+        </div>
+        <div class="card stat">
+            <div class="stat-number" th:text="${genreCount}">0</div>
+            <div>жанров</div>
+        </div>
+    </section>
+
+    <h2>Недавно добавленные</h2>
+    <p th:if="${#lists.isEmpty(latest)}" class="muted">Пока нет ни одной книги.</p>
+    <section class="cards" th:unless="${#lists.isEmpty(latest)}">
+        <article class="card" th:each="b : ${latest}">
+            <h3><a th:href="@{/books/{id}(id=${b.id})}" th:text="${b.title}">Название</a></h3>
+            <p class="muted" th:text="${b.author} + ', ' + ${b.year}">Автор, год</p>
+            <span class="badge" th:text="${b.genre.title}">Жанр</span>
+        </article>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

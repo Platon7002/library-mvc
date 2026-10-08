@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Ошибка 500')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container error-page">
+    <div class="error-icon">⚠️</div>
+    <h1>500. Что-то пошло не так</h1>
+    <p th:text="${message ?: 'Что-то пошло не так'}">Что-то пошло не так</p>
+    <p class="muted" th:if="${path != null}">Адрес: <code th:text="${path}">/путь</code></p>
+    <a class="btn" th:href="@{/}">На главную</a>
+    <a class="btn btn-light" th:href="@{/books}">К списку книг</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

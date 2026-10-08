@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Жанры')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <h1>Жанры</h1>
+    <section class="cards">
+        <a class="card genre-card" th:each="s : ${stats}" th:href="@{/genres/{code}(code=${s.genre.code})}">
+            <h3 th:text="${s.genre.title}">Жанр</h3>
+            <p class="muted">Книг: <span th:text="${s.count}">0</span></p>
+        </a>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

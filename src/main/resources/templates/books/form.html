@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${pageTitle})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container narrow">
+    <h1 th:text="${pageTitle}">Заголовок формы</h1>
+
+    <!-- Одна форма для создания и редактирования: адрес зависит от того, есть ли у книги id.
+         novalidate отключает проверку браузера, чтобы работала проверка на сервере (@Valid) -->
+    <form class="form" method="post" novalidate th:object="${bookForm}"
+          th:action="${bookForm.id == null} ? @{/books} : @{/books/{id}(id=${bookForm.id})}">
+
+        <div class="alert alert-error" th:if="${#fields.hasErrors('*')}">
+            Исправьте ошибки в форме и попробуйте ещё раз.
+        </div>
+
+        <div class="field" th:classappend="${#fields.hasErrors('title')} ? 'has-error'">
+            <label for="title">Название *</label>
+            <input id="title" type="text" th:field="*{title}">
+            <div class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Ошибка</div>
+        </div>
+
+        <div class="field" th:classappend="${#fields.hasErrors('author')} ? 'has-error'">
+            <label for="author">Автор *</label>
+            <input id="author" type="text" th:field="*{author}">
+            <div class="error" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Ошибка</div>
+        </div>
+
+        <div class="row">
+            <div class="field" th:classappend="${#fields.hasErrors('year')} ? 'has-error'">
+                <label for="year">Год издания *</label>
+                <input id="year" type="number" th:field="*{year}">
+                <div class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Ошибка</div>
+            </div>
+
+            <div class="field" th:classappend="${#fields.hasErrors('pages')} ? 'has-error'">
+                <label for="pages">Страниц *</label>
+                <input id="pages" type="number" th:field="*{pages}">
+                <div class="error" th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}">Ошибка</div>
+            </div>
+        </div>
+
+        <div class="field" th:classappend="${#fields.hasErrors('genre')} ? 'has-error'">
+            <label for="genre">Жанр *</label>
+            <select id="genre" th:field="*{genre}">
+                <option value="">— выберите жанр —</option>
+                <option th:each="g : ${genres}" th:value="${g}" th:text="${g.title}">Жанр</option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}">Ошибка</div>
+        </div>
+
+        <div class="field" th:classappend="${#fields.hasErrors('description')} ? 'has-error'">
+            <label for="description">Описание</label>
+            <textarea id="description" rows="4" th:field="*{description}"></textarea>
+            <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Ошибка</div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" type="submit">Сохранить</button>
+            <a class="btn btn-light" th:href="@{/books}">Отмена</a>
+        </div>
+    </form>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

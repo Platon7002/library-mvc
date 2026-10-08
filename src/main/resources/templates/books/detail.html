@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${book.title})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <article class="card detail">
+        <h1 th:text="${book.title}">Название</h1>
+        <dl>
+            <dt>Автор</dt>
+            <dd th:text="${book.author}">Автор</dd>
+            <dt>Год издания</dt>
+            <dd th:text="${book.year}">2000</dd>
+            <dt>Страниц</dt>
+            <dd th:text="${book.pages}">100</dd>
+            <dt>Жанр</dt>
+            <dd><a th:href="@{/genres/{code}(code=${book.genre.code})}" th:text="${book.genre.title}">Жанр</a></dd>
+            <dt>Описание</dt>
+            <dd th:text="${#strings.isEmpty(book.description)} ? 'Описание не заполнено' : ${book.description}">Описание</dd>
+        </dl>
+
+        <div class="actions">
+            <a class="btn" th:href="@{/books/{id}/edit(id=${book.id})}">Изменить</a>
+            <form method="post" th:action="@{/books/{id}/delete(id=${book.id})}"
+                  onsubmit="return confirm('Удалить эту книгу?');">
+                <button class="btn btn-danger" type="submit">Удалить</button>
+            </form>
+            <a class="btn btn-light" th:href="@{/books}">← К списку</a>
+        </div>
+    </article>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Ошибка 404')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container error-page">
+    <div class="error-icon">🔍</div>
+    <h1>404. Страница не найдена</h1>
+    <p th:text="${message ?: 'Страница не найдена'}">Страница не найдена</p>
+    <p class="muted" th:if="${path != null}">Адрес: <code th:text="${path}">/путь</code></p>
+    <a class="btn" th:href="@{/}">На главную</a>
+    <a class="btn btn-light" th:href="@{/books}">К списку книг</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

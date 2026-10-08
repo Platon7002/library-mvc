@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${genre.title})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: navbar}"></header>
+
+<main class="container">
+    <h1>Жанр: <span th:text="${genre.title}">Жанр</span></h1>
+
+    <p th:if="${#lists.isEmpty(books)}" class="empty">В этом жанре пока нет книг.</p>
+
+    <ul class="plain-list" th:unless="${#lists.isEmpty(books)}">
+        <li th:each="b : ${books}">
+            <a th:href="@{/books/{id}(id=${b.id})}" th:text="${b.title}">Название</a>
+            <span class="muted" th:text="'— ' + ${b.author} + ', ' + ${b.year}">— Автор, год</span>
+        </li>
+    </ul>
+
+    <a class="btn btn-light" th:href="@{/genres}">← Все жанры</a>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
