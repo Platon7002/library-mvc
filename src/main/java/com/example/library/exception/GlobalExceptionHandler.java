@@ -13,16 +13,11 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-/**
- * Единое место обработки ошибок для всех контроллеров (@ControllerAdvice).
- * Вместо страшной страницы с трассой пользователь видит аккуратные страницы 404 и 500.
- */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    /** Нет книги или жанра: 404. */
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleNotFound(ResourceNotFoundException ex, HttpServletRequest request, Model model) {
@@ -30,7 +25,6 @@ public class GlobalExceptionHandler {
         return "error/404";
     }
 
-    /** Несуществующий адрес (например, /abc): тоже 404. */
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleNoResource(NoResourceFoundException ex, HttpServletRequest request, Model model) {
@@ -38,7 +32,6 @@ public class GlobalExceptionHandler {
         return "error/404";
     }
 
-    /** В адресе вместо числа текст (например, /books/abc): тоже 404. */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleBadArgument(MethodArgumentTypeMismatchException ex, HttpServletRequest request, Model model) {
@@ -46,7 +39,6 @@ public class GlobalExceptionHandler {
         return "error/404";
     }
 
-    /** Например, по ссылке открыли адрес, который принимает только POST: 405. */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public String handleMethod(HttpRequestMethodNotSupportedException ex, HttpServletRequest request, Model model) {
@@ -54,7 +46,6 @@ public class GlobalExceptionHandler {
         return "error/error";
     }
 
-    /** Любая непредвиденная ошибка: 500. Подробности пишем в лог, пользователю их не показываем. */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleAny(Exception ex, HttpServletRequest request, Model model) {
