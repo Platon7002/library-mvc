@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.example.library.model.Book;
 
-/** Хранилище в памяти: данные живут, пока работает приложение. */
 @Repository
 public class InMemoryBookRepository implements BookRepository {
 
