@@ -10,7 +10,6 @@ import com.example.library.exception.GenreNotFoundException;
 import com.example.library.model.Genre;
 import com.example.library.service.BookService;
 
-/** Контроллер №3: жанры (список жанров с количеством книг и книги выбранного жанра). */
 @Controller
 @RequestMapping("/genres")
 public class GenreController {
