@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.library.service.BookService;
 
-/** Контроллер №1: главная страница. */
 @Controller
 public class HomeController {
 
@@ -24,7 +23,6 @@ public class HomeController {
         return "index";
     }
 
-    /** Специальный адрес, чтобы вручную проверить страницу 500 (ошибка сервера). */
     @GetMapping("/test-500")
     public String testServerError() {
         throw new IllegalStateException("Тестовая ошибка для проверки страницы 500");
